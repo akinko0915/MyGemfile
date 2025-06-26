@@ -1,6 +1,7 @@
 DISTANCE = 507
 class NightBus
-  def rude
+  def ride_shinjku_to_kyoto
+    depart_from('Shinjuku')
     terminals.each do |terminal|
       if terminal == 'B4'
         leave_luggage
@@ -24,6 +25,6 @@ class NightBus
       left_distance -= 1
     end while left_distance > 0
 
-    arrive
+    arrive_in('Kyoto')
   end
 end
