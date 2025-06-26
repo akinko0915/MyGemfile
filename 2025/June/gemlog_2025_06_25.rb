@@ -1,5 +1,16 @@
 DISTANCE = 507
+
+class Passenger
+  attr_reader :sex
+  def initialize(sex)
+    @sex = sex
+  end
+end
 class NightBus
+  def initialize(seatmate)
+    @seatmate= seatmate
+  end
+
   def ride_shinjku_to_kyoto
     depart_from('Shinjuku')
     terminals.each do |terminal|
@@ -10,9 +21,15 @@ class NightBus
       end
     end
 
+    happy = false
     seat_numbers.each do |seat|
-      sit_seat if seat == 'A8'
+      if seat == 'A8'
+        sit_seat
+        happy = true if by_the_window?
+      end
     end
+
+    relief if check_seatmate(@seatmate) == :woman
 
     left_distance = DISTANCE
 
@@ -27,4 +44,12 @@ class NightBus
 
     arrive_in('Kyoto')
   end
+
+  private
+  def check_seatmate(passenger)
+    passenger.sex
+  end
 end
+
+seatmate = Passenger.new(:woman)
+NightBus.new(seatmate).ride_shinjuku_to_kyoto
