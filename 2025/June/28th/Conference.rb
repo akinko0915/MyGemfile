@@ -14,11 +14,14 @@ class Conference
   end
 
   def start_sessions
-    @sessions.each do |speech|
+    @sessions.each_with_index do |speech, order|
       session = speech[:session]
       @is_dark = true
       session.start
       session.call_to_stage
+      if order == @sessions.length - 1
+        pick_up_phone
+      end
       session.finish(speech[:thoughts])
       @is_dark = false
     end
